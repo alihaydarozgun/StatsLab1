@@ -1,0 +1,147 @@
+---
+title: "Lab4"
+author: "Ali Haydar Ozgun"
+date: "10/1/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Problem 1; Estimate the letter occurrence probabilities of all 26 letters in English by measuring a paragraph of English text from wikipedia. (hint use strsplit() to split a paragraph into individual letters).
+
+
+```{r}
+
+library(ggplot2) 
+library(dplyr)  
+
+# We will use the definition of Embodied Cognition from Wikipedia for this problem
+
+embodied_cogniton <- 'Embodied cognition is the theory that many features of cognition, whether human or otherwise, are shaped by aspects of the entire body of the organism. The features of cognition include high level mental constructs (such as concepts and categories) and performance on various cognitive tasks (such as reasoning or judgment). The aspects of the body include the motor system, the perceptual system, bodily interactions with the environment (situatedness), and the assumptions about the world that are built into the structure of the organism. The embodied mind thesis challenges other theories, such as cognitivism, computationalism, and Cartesian dualism. It is closely related to the extended mind thesis, situated cognition, and enactivism. The modern version depends on insights drawn from recent research in psychology, linguistics, cognitive science, dynamical systems, artificial intelligence, robotics, animal cognition, plant cognition and neurobiology.'
+
+# Dividing this paragraph to individual letter; 
+
+# we use the 'unlist' function to change the class to the character variable
+
+embodied_letters <- unlist(strsplit(embodied_cogniton, split = ''))
+
+# table(embodied_letters) # to calculate all the letters in the paragraph
+
+lower_case <- tolower(embodied_letters)
+
+table(lower_case)
+
+count_letter <- table(lower_case)
+
+count_letter <- as.data.frame(count_letter)
+
+
+# We will limit letters in the data frame to only them to the alphabet 
+# Therefore we need to filter the lower case column in our count_letter data frame
+
+filtered_letters <- count_letter %>% 
+  filter(lower_case %in% letters == TRUE)
+
+# Calculation of the probabilities of the lower letters in the paragraph
+
+total_letters <- sum(filtered_letters$Freq)
+
+filtered_letters <- filtered_letters %>% 
+  mutate(probabilities = Freq/total_letters)
+
+knitr::kable(filtered_letters)
+
+```
+
+Helping Rate : 60 (Specifically for the '%in%' section)
+
+
+Problem 2; Generate “random” strings of letters that are sampled from a distribution where letter occurrence probability is the same as natural English. Use the probabilities for each letter from this Wikipedia article, or use your own estimates from the previous question.
+
+
+```{r}
+
+ 
+random_sample <- sample(filtered_letters$lower_case, 50*5, 
+                        replace = TRUE,
+                        prob = filtered_letters$probabilities)
+
+sample_strings <- matrix(random_sample, ncol=5)
+
+paste(sample_strings[1,], collapse="")
+
+random_strings <-c()
+for(i in 1:dim(sample_strings)[1]){
+  random_strings[i] <- paste(sample_strings[i,], collapse="")
+}
+
+random_strings
+
+```
+
+Helping Rate : 70
+
+
+Problem 3; Generate a random walk of 10,000 steps. In a random walk, you are simulating the process of randomly taking a step up or down, as if you are on an infinite staircase. At each step you flip a coin. If you get heads you go up one step, if you get tails you go down one step. Start on step 0, then simulate a random walk for 10,000 steps. Your vector should preserve the step number for each step. For example, if the the first three steps were all heads, then the vector would begin with 0,1,2,3, which indicates a single step up each time. Plot the first 1,000 steps.
+
+```{r}
+
+steps <- c(0)
+for(i in 1:10000){
+  coin_flip <- sample(c(1, -1), 1)
+  steps[i + 1] <- steps[i] + coin_flip
+}
+        
+plot(steps[1:1000]) 
+```
+
+
+Helping Rate : 40
+
+
+Problem 4; What was the most positive and most negative step reached out of 10,000?
+
+
+
+
+```{r}
+
+# To determine that we need to  find the maximum which will give us the most positive step, and minimum which will give the most negative step
+
+max(steps)
+min(steps)
+
+```
+
+Helping Rate : 80
+
+
+
+
+Problem 5; What was the longest run of steps where all steps were positive numbers. For example, in the sequence: 1,2,3,2,1,0,-1,-2,-1,-2,-1,0,1,2,3; the answer is 5 because the first five values were all positive, and this was the longest sequence of positive values.
+
+
+```{r}
+
+logical_step <- sign(steps)
+
+sequence <- c()
+counter <- 0
+
+for(i in 1:length(logical_step)){
+  if(logical_step[i] == 0){
+    sequence <- c(sequence, counter)
+    counter <- 0
+  } else {
+    counter <- counter + logical_step[i]
+  }
+}
+
+max(sequence)
+```
+
+Helping Rate : 20
+
