@@ -32,7 +32,7 @@ selected_sample <- random_sampling[random_sampling > 2.5]
 
 length(selected_sample)
 
-length(selected_sample) / 1000000 # this gave us 0.006218, and that verifies how the rnorm functions produces well sugessted numbers
+length(selected_sample) / 1000000 
 
 
 ```
@@ -52,7 +52,7 @@ pnorm(130, mean = 100, sd = 10, lower.tail = FALSE, log.p = FALSE) #0.001349898 
 
 # To find how many people would get a score higher than 3 standard deviations from the mean, we need to multiply the probability by the total number of the person who took the exam. 
 
-10000 * pnorm(130, mean = 100, sd = 10, lower.tail = FALSE, log.p = FALSE) #13.49898 person scored higher than 3 standard deviation from the mean. 
+10000 * pnorm(130, mean = 100, sd = 10, lower.tail = FALSE, log.p = FALSE) 
 
 
 ### Other possible solution is;
