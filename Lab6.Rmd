@@ -1,0 +1,126 @@
+---
+title: "Lab6"
+author: "Ali Haydar Ozgun"
+date: "10/20/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Problem 1; Write a function that conducts a randomization test for the mean difference between two groups, and show that it works. Specifically, using your function, conduct a randomization test on the same data we used in the above example from lab. Report the results and briefly discuss what the results of the randomization tell you. (6 points). Extra: if the observed mean difference in the experiment was found to be .5, what would you have concluded from the randomization test?
+
+Inputs : 
+       - the inputs should include a vector for group 1, and vector for group 2, and the number of permutations/re-samplings of the data to create.
+       
+Outputs: 
+       - output each group mean, and the difference between group means
+       - output a histogram of the sampling distribution of the possible mean
+       differences produced by the randomization process
+       - output the probability or odds of obtaining the observed mean difference or
+       larger
+
+Optional:
+       - include the ability to calculate the probability of obtaining any mean
+       difference or larger
+       - deal with negative difference scores appropriately
+       - add one or two-tailed test options
+
+```{r}
+
+# we need to write our function for randomization test; in the function we referred means of group one with X which we will call it later, and mean of group two with Y which we will call it later. And we resample them 100 times
+
+group_1 <- c(9, 6, 3, 5, 7)
+group_2 <- c(8, 6, 4, 2, 1)
+
+randomization_test <- function(X, Y, resamples = 100){
+  # We calculate the group means and group means differences;
+  
+  group_X_mean <- mean(X)
+  group_Y_mean <- mean(Y)
+  mean_differences <- group_X_mean - group_Y_mean
+  
+  
+  # For randomization we need to combine all total;
+  
+  all_means <- c(X, Y)
+  
+  randomization_differences <- c()
+  for(i in 1 : resamples){
+    resample <- sample(all_means)
+    new_X_mean <- mean(resample[1:length(X)])
+    new_Y_mean <- mean(resample[(length(X) + 1):length(all_means)])
+    randomization_differences[i] <- new_X_mean-new_Y_mean
+  }
+  
+  # Plotting ;
+  library(ggplot2)
+  randomization_plot <- qplot(randomization_differences)+
+    geom_histogram(color="orange")+
+    geom_vline(xintercept= mean_differences, color ="red")+
+    theme_classic()
+  
+  
+  #output the probability or odds of obtaining the observed mean difference or larger
+ 
+  
+  probability_value <- length(randomization_differences[randomization_differences >= mean_differences]) / resamples
+  
+  
+  output_test <- list(X_mean = group_X_mean, 
+                      Y_mean = group_Y_mean, 
+                      difference = mean_differences,
+                      randomization = randomization_differences,
+                      plot = randomization_plot,
+                      probability_value = probability_value)
+                      
+                    
+  
+  return(output_test)
+  
+  
+}
+
+randomization_test(X = group_1, Y = group_2, resamples = 1000)
+
+
+
+```
+
+```{r}
+# Testing the function with data;
+library(dplyr)
+
+
+the_data <- read.csv("open_data/SchroederEpley2015data.csv", header = TRUE)
+
+new_group <- the_data %>% 
+  filter(CONDITION == 0) %>% 
+  select(Intellect_Rating)
+
+new_group <- new_group$Intellect_Rating
+
+
+group_one <- the_data %>% 
+  filter(CONDITION == 1) %>% 
+  select(Intellect_Rating)
+
+group_one <- group_one$Intellect_Rating
+
+randomization_test(X = new_group, Y = group_one, resamples = 1000)
+
+
+## When we check or play with the resample we do not observe changes in the mean differences. However, changing the resample we clearly see the changes in the probability value. So, if we increase the resample from 100 to 10000, probability value would change from 1 to 0.998. That means changes in the resample can affect the probability value. 
+
+## if we observed mean difference in the experiment was found to be .5, we could say that this difference is not significant. Because to be able to get statistical significant result the p-value should be under the .05
+
+```
+
+
+
+Helping Rate : 40
+
+ 
+
