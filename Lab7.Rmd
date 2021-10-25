@@ -1,0 +1,116 @@
+---
+title: "Lab7"
+author: "Ali Haydar Ozgun"
+date: "10/25/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Problem 1; A test-taker answered 50 true/false questions and received a score of 60% correct. Report the results of a binomial test and explain whether you think the test-score could be produced by the test-taker randomly guessing on each question
+
+
+```{r}
+
+
+library(ggplot2) 
+library(dplyr)  
+
+# The question asked 60% correct scores in 50 questions. That means we have '30'  successes;
+
+binom.test(30, 50, p= .5, alternative = 'greater')
+
+# With this we calculated the p-value = 0.1013. So, that brings us approximately 10% chance to produce randomly guessing on each question. Therefore 10% chance to get 60% and greater for each question. 
+
+```
+
+Helping Rate : 90
+
+ 
+
+Problem 2; An examiner wants to make a TRUE/FALSE test, but is still deciding how many questions they will include. They want to make sure that it would be very difficult to simply randomly guess and be able to score any higher than 55% percent. How many questions would the examiner need to use to be confident that scores of 55% or higher were not produced by chance?
+
+
+```{r}
+
+# The question asked us any scores of 55% or higher were not produced by chance. When we worked through the Lab7, we saw that for getting the better p-value we need to increase trials. In that case; 
+
+# First we can try the solve the question for 100 questions;
+
+binom.test(55, 100, .5, alternative = 'greater') # that gives us p-value = 0.1841. In that case probability of getting 55% or greater is approximately 18% for 100 question. 
+
+
+
+# For 250 questions we have approximately 139 success for 55%;
+
+binom.test(139, 250, .5, alternative = 'greater') # that gives us  p-value = 0.04375. This can let us say that we have better probability for 250 questions.
+
+
+
+# When we try to same binomial test for 10000 questions there will be 550 numbers of success and ; 
+
+binom.test(550, 1000, .5, alternative = 'greater') # that brings us p-value = 0.0008653. So, even with increasing to the 1000 question we can confident for the scores.
+
+
+
+```
+
+Helping Rate : 85
+
+
+
+
+
+Problem 3; A test has 5 TRUE/FALSE questions (each with one right answer) and 5 multiple choice questions with four choices each (each with only one right answer).
+
+- Create a sampling distribution or probability distribution to illustrate how a random chance process could perform on this test.
+
+
+```{r}
+
+# we first created one repeated simulated test taker 
+rbinom(n = rep(1, 10), size = 1,
+       prob = c(.5, .5, .5, .5, .5, .25, .25, .25, .25, .25))
+
+# With sum() function we can get the number of correct question we have simulated before for test taker;
+
+sum(rbinom(n = rep(1, 10), size = 1,
+       prob = c(.5, .5, .5, .5, .5, .25, .25, .25, .25, .25)))
+
+# For the distribution of random chance we need to use replicate() function to replicate the previous test taker performance;
+
+
+sampling_distribution <- replicate(10000, 
+                                   sum(rbinom(n = rep(1, 10),
+                                              size = 1,
+                                              prob = c(.5, .5, .5,
+                                                       .5, .5, .25,
+                                                       .25, .25,
+                                                       .25, .25))))
+sampling_distribution
+
+hist(sampling_distribution)
+
+```
+
+
+- What is the probability that randomly guessing on each question could allow a person to receive 75% or greater on this test?
+
+```{r}
+
+sampling_distribution[sampling_distribution >= 8]
+
+length(sampling_distribution[sampling_distribution >= 8])
+
+length(sampling_distribution[sampling_distribution >= 8]) / 10000
+
+```
+
+
+Helping Rate : 65
+
+
+
