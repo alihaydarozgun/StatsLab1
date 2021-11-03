@@ -1,0 +1,95 @@
+---
+title: "Lab8"
+author: "Ali Haydar Ozgun"
+date: "10/27/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Problem 1; Write a function to convert a vector of raw-scores into z-scores. The function should have inputs for the vector, the mean and sd of the normal distribution, and should return a vector of zscores.Also, demonstrate that the function works correctly.  How you make the demonstration is up to you.
+
+- Advanced: Have an option so that the function will convert the raw scores to zscores in one of two ways:
+- using user provided mean and standard deviation
+- using the calculated mean and standard deviation from the raw scores
+
+```{r}
+
+
+# Computing mean and sd from scores;
+
+example_numbers <- c(1, 2, 3, 4, 5)
+mean(example_numbers)
+sd(example_numbers)
+
+
+(example_numbers - mean(example_numbers)) / sd(example_numbers)
+
+# Computing z-score from known mu and sd;
+
+example_numbers <- c(1, 2, 3, 4, 5)
+
+mu <- 3
+sigma <- 1
+
+(example_numbers - mu) / sigma
+
+# Putting everything in a function
+
+raw_to_zscore <- function(raw_scores, mu, sigma){
+  z_score <- (raw_scores - mu) / sigma
+  return(z_score)
+  
+}
+
+
+raw_to_zscore(raw_scores = c(1, 2, 3, 4, 5),
+              mu = 3,
+              sigma = 1)
+
+
+```
+
+Helping Rate : 40
+
+ 
+
+Problem 2; Base R does not have a function for a z-test. Write a function to accomplish a one-sample z-test. Remember, a one-sample z test is used to compare the probability of obtaining the sample mean (or larger or smaller) if it came from a known normal distribution.
+
+- Use your z-test function to conduct a test of the following. A sample of 25 scores is taken. The mean of the sample is 50. The sample is assumed to have been taken from a normal distribution with mean 40 and standard deviation 7. Report a one-tailed z-test, examining the probability of obtaining a sample of greater than 50 in this situation. Report the results, and give a brief sentence explaining the result and the inference you make
+
+
+```{r}
+
+z_test <- function(sample_mean, sample_size, mu, sigma){
+  sample_distribution_mean <- mu
+  sample_distribution_sd <- sigma / sqrt(sample_size)
+  
+  p_value <- pnorm(sample_mean, sample_distribution_mean, sample_distribution_sd,
+                   lower.tail = FALSE)
+  return(p_value)
+  
+}
+
+z_test(sample_mean = 50,
+       sample_size = 25,
+       mu = 40,
+       sigma = 7)
+
+### 4.570531e-13 = 0.0000000000004570531 that means we got really small p-value for 25 sample size, and 50 sample mean distribution. 
+
+```
+
+Helping Rate : 40
+
+
+
+
+
+
+
+
+
