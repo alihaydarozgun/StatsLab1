@@ -1,0 +1,91 @@
+---
+title: "Lab9"
+author: "Ali Haydar Ozgun"
+date: "11/17/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Problem ; 
+
+- The following paper links to open data, and describes a design where two chi-square tests are performed for Experiment 1 (A copy of this paper will be made available).
+
+Silver, A. M., Stahl, A. E., Loiotile, R., Smith-Flores, A. S., & Feigenson, L. (2020). When Not Choosing Leads to Not Liking: Choice-Induced Preference in Infancy. Psychological Science, 0956797620954491.
+
+Obtain the data from the online repository, show your code for loading it into R, then conduct the same tests reported in Experiment 1 that the authors conducted. These include one binomial test, and two chi-square tests. Briefly report your re-analysis, and discuss whether you obtained the same values as the authors did (6 points).
+
+
+
+
+```{r}
+#loading the data;
+
+library(readxl)
+
+When_not_choosing_leads_to_not_liking_Data <- read_excel("open_data/When not choosing leads to not liking_Data.xlsx")
+
+
+dim(When_not_choosing_leads_to_not_liking_Data)
+
+
+```
+
+#Reproducing the binomial test
+
+```{r}
+
+library(dplyr)
+
+
+experiment1 <- When_not_choosing_leads_to_not_liking_Data %>% 
+  filter(ExperimentNumber == 1)
+
+number_chose_C <- sum(experiment1$'Infant Chose C')
+
+number_chose_C
+
+binom.test(x = number_chose_C,
+      n = dim(experiment1)[1],
+      p = .5,
+      alternative = 'two.sided')
+
+# The binomial test in the original article found that 76.2% chose the new block significantly different from chance. And here, we found the probability of success 0. 7619048, which is the same as their findings.  
+
+# Also our p-value (0.0266) and 95 percent confidence interval(0.5283402, 0.9178241) are similar to the original article.
+
+```
+
+#Reproducing the chi-square test for gender;
+
+```{r}
+
+library(tidyr)
+
+gender_choice_table <- experiment1 %>% 
+  group_by(Gender, `Infant Chose C`) %>% 
+  summarize(counts = n()) %>% 
+  pivot_wider(names_from = c(Gender),
+              values_from = counts)
+
+gender_choice_table <- gender_choice_table[,2:3]
+
+(gender_Xsq <- chisq.test(gender_choice_table))
+
+uncorrected_Xsq <- sum((gender_Xsq$observed-gender_Xsq$expected)^2 / gender_Xsq$expected)
+
+uncorrected_Xsq
+
+gender_Xsq_unc <- pchisq(uncorrected_Xsq, 1, lower.tail = FALSE)
+
+gender_Xsq_unc
+
+
+# Findings of chi-square test for gender are showed the similarity on chi-square = 0.15 (in our findings 0.1527273), and p = .696 (in our findings 0.6959426)
+
+```
+
+
+
