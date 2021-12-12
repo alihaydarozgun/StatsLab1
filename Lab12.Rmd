@@ -1,0 +1,50 @@
+---
+title: "Lab12"
+author: "Ali Haydar Ozgun"
+date: "12/8/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+1. Should you do a linear regression on this data? Explain.
+
+Y <- c(10,9,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9,10)
+
+X <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19)
+
+plot(X,Y)
+
+
+```{r}
+some_data <- data.frame(Y <- c(10,9,8,7,6,5,4,3,2,1,2,3,4,5,6,7,8,9,10),
+                        X <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19))
+
+library(ggplot2)
+ggplot(some_data, aes(x=X,y=Y))+
+  geom_point()+
+  geom_smooth(method ='lm',se = FALSE)
+
+# Looking at the linear regression;
+
+lm(Y~X )
+
+#Double checking the mean;
+
+mean(some_data$Y)
+
+
+
+```
+
+
+- When we look at the first half of the data, we can see a negative correlation, and the other half of the data seems positive. But the data is V-shaped. 
+
+- If we try to do a correlation test, we see that there is 0 correlation between Y and X., And for the linear regression test, we get the small number and flat line on our plot. So, that means there is no relationship between Y and X. Linear regression tries to find the best fit line. Therefore, we should not do the linear regression on this data because linear regression can not explain the relationship between Y and X; this data is not linear.
+
+
+
+
