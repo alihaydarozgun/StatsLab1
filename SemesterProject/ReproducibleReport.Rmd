@@ -1,0 +1,89 @@
+---
+title: "Reproducible Report"
+author: "Ali Haydar Ozgun"
+date: "12/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+
+This report re-produces the analysis of Experiment 4 reported in Mehr, Song, Spelke (2016). The citation for the article is:
+
+Mehr, S. A., Song, L. A., & Spelke, E. S. (2016). For 5-month-old infants, melodies are social. Psychological Science, 27(4), 486-501.
+
+The data were downloaded from [https://osf.io/y3kzd/files/](https://osf.io/y3kzd/files/)
+
+Mehr et al. (2016) had 5- month old infants participants and their parents 
+
+
+
+## Re-analysis
+
+```{r}
+
+# Loading the libraries and data
+
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+
+all_data <- read.csv('LUL_pss.csv')
+
+experiment_four <-  all_data %>% filter(exp4 == 1)
+
+# Toy playing familiar song;
+
+familiar_song <- experiment_four$famtot_6
+
+mean(familiar_song)
+
+sd(familiar_song)
+
+
+# Toy playing unfamiliar song;
+
+un_familiar <- experiment_four$unfamtot_6
+
+mean(un_familiar)
+
+sd(un_familiar)
+
+# Paired sample t-test;
+
+t.test(familiar_song, un_familiar, paired = TRUE, var.equal = TRUE)
+
+
+# difference_scores <- experiment_four$mbabylike - experiment_four$mtotrecord
+
+difference_scores <- experiment_four$mtotrecord - experiment_four$mbabylike
+
+# difference_scores <- experiment_four$mtotsing - experiment_four$delay
+
+
+t.test(difference_scores, mu = .1)
+
+
+
+
+```
+```{r}
+
+#data.frame(familiar_song, un_familiar)
+
+
+```
+
+
+### Table of Means
+
+
+### Reproducing the Plot
+
+
+### T-test

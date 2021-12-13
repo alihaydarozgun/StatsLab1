@@ -1,0 +1,113 @@
+---
+title             : "Reanalysis of 'For 5-Month-Old Infants, Melodies Are Social' Study "
+shorttitle        : " Semester Long Project PSYC 7765/66"
+
+author: 
+  - name          : "Ali Haydar Ozgun"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "2900 Bedford Avenue"
+    email         : "alihaydar.ozgun96@bcmail.cuny.edu"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - Conceptualization
+      - Writing - Original Draft Preparation
+      - Writing - Review & Editing
+
+
+affiliation:
+  - id            : "1"
+    institution   : "CUNY - Brooklyn College"
+
+authornote: |
+  Ali Haydar Ozgun Brooklyn College Psychology Department, Master of Art Experimental Psychology Program First Semester Student.
+
+  
+
+abstract: |
+  This report re-produces the analysis of Experiment 4 reported in @mehr20165. The citation for the article is:
+  
+  @mehr20165. For 5-month-old infants, melodies are social. Psychological Science, 27(4), 486-501.
+  
+  The data were downloaded from [https://osf.io/y3kzd/files/](https://osf.io/y3kzd/files/).
+  
+   @mehr20165 had 5- month old infants participants and their parents
+  
+  
+  
+  <!-- https://tinyurl.com/ybremelq -->
+
+  
+
+bibliography      : ["r-references.bib","myReferences.bib"]
+
+floatsintext      : no
+figurelist        : yes
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+r_refs("r-references.bib")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+This report re-produces the analysis of Experiment 4 reported in @mehr20165. The citation for the article is:
+  
+@mehr20165. For 5-month-old infants, melodies are social. Psychological Science, 27(4), 486-501.
+  
+The data were downloaded from [https://osf.io/y3kzd/files/](https://osf.io/y3kzd/files/).
+  
+@mehr20165 had 5- month old infants participants and their parents
+  
+
+# Methods
+
+
+## Participants
+
+## Material
+
+## Procedure
+
+## Data analysis
+We used `r cite_r("r-references.bib")` for all our analyses.
+
+
+# Results
+
+
+```{r}
+
+# Plotting
+
+
+```
+
+
+
+# Discussion
+
+
+\newpage
+
+# References
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup
