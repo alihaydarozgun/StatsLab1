@@ -379,6 +379,7 @@ library(tidyr)
 
 all_data &lt;- read.csv(&#39;LUL_pss.csv&#39;)
 
+
 experiment_four &lt;-  all_data %&gt;% filter(exp4 == 1)
 
 # Toy playing familiar song;
@@ -389,6 +390,8 @@ mean(familiar_song)</code></pre>
 <pre><code>## [1] 202.6364</code></pre>
 <pre class="r"><code>sd(familiar_song)</code></pre>
 <pre><code>## [1] 77.21617</code></pre>
+<pre class="r"><code>median(familiar_song)</code></pre>
+<pre><code>## [1] 210</code></pre>
 <pre class="r"><code># Toy playing unfamiliar song;
 
 un_familiar &lt;- experiment_four$unfamtot_6
@@ -430,15 +433,46 @@ t.test(difference_scores, mu = .1)</code></pre>
 ## sample estimates:
 ## mean of x 
 ##  2.936364</code></pre>
-<pre class="r"><code>#data.frame(familiar_song, un_familiar)</code></pre>
 <div id="table-of-means" class="section level3">
 <h3>Table of Means</h3>
+<pre class="r"><code>data.frame(familiar_song, un_familiar)</code></pre>
+<pre><code>##    familiar_song un_familiar
+## 1            125         177
+## 2            287         264
+## 3            217         265
+## 4            226         182
+## 5            180         180
+## 6            237         168
+## 7             57          80
+## 8            109          48
+## 9            221         120
+## 10           163         143
+## 11           203         271
+## 12           180         151
+## 13           329         224
+## 14           224         183
+## 15           244         245
+## 16           161         145
+## 17           178         160
+## 18           311         256
+## 19           360         261
+## 20            89         105
+## 21           234         225
+## 22           123          67</code></pre>
+<pre class="r"><code># Reproducing the participants female mean age and total number
+
+experiment_four %&gt;% 
+  filter(female == 1) %&gt;%
+  group_by(female) %&gt;% 
+  summarize(meanAge = mean(experiment_four$age),
+            total_number = sum(experiment_four$female))</code></pre>
+<pre><code>## # A tibble: 1 × 3
+##   female meanAge total_number
+##    &lt;int&gt;   &lt;dbl&gt;        &lt;int&gt;
+## 1      1    5.49           11</code></pre>
 </div>
 <div id="reproducing-the-plot" class="section level3">
 <h3>Reproducing the Plot</h3>
-</div>
-<div id="t-test" class="section level3">
-<h3>T-test</h3>
 </div>
 </div>
 

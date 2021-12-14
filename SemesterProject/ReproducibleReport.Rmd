@@ -35,6 +35,7 @@ library(tidyr)
 
 all_data <- read.csv('LUL_pss.csv')
 
+
 experiment_four <-  all_data %>% filter(exp4 == 1)
 
 # Toy playing familiar song;
@@ -44,6 +45,8 @@ familiar_song <- experiment_four$famtot_6
 mean(familiar_song)
 
 sd(familiar_song)
+
+median(familiar_song)
 
 
 # Toy playing unfamiliar song;
@@ -72,18 +75,40 @@ t.test(difference_scores, mu = .1)
 
 
 ```
+
+
+### Table of Means
+
 ```{r}
 
-#data.frame(familiar_song, un_familiar)
+data.frame(familiar_song, un_familiar)
+
+
+  
+# Reproducing the participants female mean age and total number
+
+experiment_four %>% 
+  filter(female == 1) %>%
+  group_by(female) %>% 
+  summarize(meanAge = mean(experiment_four$age),
+            total_number = sum(experiment_four$female))
+
+```
+
+### Reproducing the Plot
+
+
+```{r}
+
+
 
 
 ```
 
 
-### Table of Means
+```{r}
+
+```
 
 
-### Reproducing the Plot
 
-
-### T-test

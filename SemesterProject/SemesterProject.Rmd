@@ -1,5 +1,5 @@
 ---
-title             : "Reanalysis of 'For 5-Month-Old Infants, Melodies Are Social' Study "
+title             : "Reanalysis of the Study : 'For 5-Month-Old Infants, Melodies Are Social' "
 shorttitle        : " Semester Long Project PSYC 7765/66"
 
 author: 
@@ -8,10 +8,7 @@ author:
     corresponding : yes    # Define only one corresponding author
     address       : "2900 Bedford Avenue"
     email         : "alihaydar.ozgun96@bcmail.cuny.edu"
-    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
-      - Conceptualization
-      - Writing - Original Draft Preparation
-      - Writing - Review & Editing
+    
 
 
 affiliation:
@@ -24,13 +21,7 @@ authornote: |
   
 
 abstract: |
-  This report re-produces the analysis of Experiment 4 reported in @mehr20165. The citation for the article is:
-  
-  @mehr20165. For 5-month-old infants, melodies are social. Psychological Science, 27(4), 486-501.
-  
-  The data were downloaded from [https://osf.io/y3kzd/files/](https://osf.io/y3kzd/files/).
-  
-   @mehr20165 had 5- month old infants participants and their parents
+  This report re-produces the analysis of Experiment 4 reported in @mehr2016. During a period of 1 to 2 weeks, 5-month-old babies listened to one of two new songs at home, with the same lyrics and rhythms, but different melodies; The song was either sung by a parent, came out of a toy, or was sung by an unfamiliar adult, first in person and then via video. Next, the infants' selective attention to two new people was tested after one sang the familiar song and the unfamiliar song. Infants who experienced their parents' singing looked at the new person singing the familiar tune longer than the new person singing the unfamiliar music. In this study the amount of exposure to the song at home significantly estimated the extent of this preference. And it has been shown that these listened melodies have a social feature for infants.
   
   
   
@@ -64,23 +55,28 @@ set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
-This report re-produces the analysis of Experiment 4 reported in @mehr20165. The citation for the article is:
+# Introduction
+  This report re-produces the analysis of Experiment 4 reported in @mehr2016. The citation for the article is:
   
-@mehr20165. For 5-month-old infants, melodies are social. Psychological Science, 27(4), 486-501.
+  @mehr2016 For 5-month-old infants, melodies are social. Psychological Science, 27(4), 486-501.
   
-The data were downloaded from [https://osf.io/y3kzd/files/](https://osf.io/y3kzd/files/).
+  The data were downloaded from [https://osf.io/y3kzd/files/](https://osf.io/y3kzd/files/).
   
-@mehr20165 had 5- month old infants participants and their parents
+@mehr2016 had 5- month old infants participants and their parent to test the infants’ selective attention and social meaning of the song for infants to two novel individuals after one sang the familiar song and the other sang the unfamiliar song. Accordingly, it has been hypothesized that the songs sung for infants have a social meaning in infants. To test that, five experiments were conducted. In these experiments, infants' preferences for the speaker of a melody to be familiar or unfamiliar were examined.
+
+  In this reanalysis, the findings at the fourth experiment were analyzed, and the measurements of the infants' gaze at the familiar and unfamiliar song's toy were repeated.
   
 
 # Methods
 
-
 ## Participants
 
-## Material
+Experiment four, tested 32 infants, but after excluding the participants who could not complete the experiment, the analyses have done on data from 22 infants. After the experiment, participants have not exposed to a familiar song and toy. Parents were asked whether they sang the song to the babies after the experiment was over.
+
 
 ## Procedure
+
+The Experiment contains four trials. On the trials, the experimenter was unaware of the song presented to the participants—the experimenter located a toy to one side of the infant participant. The characteristic of the trials was visually identical, and one of them played the song that they had already heard in Experiment 2 from the infant. The other one had not heard before from the participants in the Experiment. So, the infant participant listened to the familiar and unfamiliar songs twice between the trials—the infant's gaze toward the toy measured during the singing and in silence for each trial. 
 
 ## Data analysis
 We used `r cite_r("r-references.bib")` for all our analyses.
@@ -100,6 +96,7 @@ We used `r cite_r("r-references.bib")` for all our analyses.
 
 # Discussion
 
+Experiment 4 results show that infants can distinguish between familiar and unfamiliar songs. In other words, experimental findings from Experiment 4 show that when babies hear familiar songs, they tend to look longer at the toy from which the familiar song comes.
 
 \newpage
 
