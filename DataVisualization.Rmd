@@ -1,0 +1,119 @@
+---
+title: "DataVisualization"
+author: "Ali Haydar Ozgun"
+date: "12/13/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+library(ggplot2)
+
+# Figure 5;
+
+base_ratio <- rep(as.factor(c("4:6","6:9","4:9")),2)
+wide_lev <- rep(as.factor(c("Wide Base","Wide Top")),3)
+xids <- c(15,15.5,17.5,17,18,16.5)
+dv_SEs   <- c(4,3.4,4,3,2,4)
+plot_df <- data.frame(base_ratio,
+                      wide_lev,
+                      xids,
+                      dv_SEs)
+
+ggplot(plot_df, aes(x=base_ratio,y=xids,
+                    group=wide_lev,
+                    color=wide_lev,
+                    fill=wide_lev))+
+  geom_bar(stat="identity", position="dodge")+
+  geom_errorbar(aes(ymin=xids-dv_SEs,
+                    ymax=xids+dv_SEs),
+                position=position_dodge(width=.8),
+                width=.1,
+                color="black")+
+  coord_cartesian(ylim=c(14,20))+
+  xlab("Top-to Base Ratio")+
+  ylab("Estimate (xids)")+
+  ggtitle("Fig. 5")+
+  theme_classic(base_size=10)+
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+
+```{r}
+
+# Figure 2;
+
+factor_one <- rep(rep(as.factor(c("No Transient","Transient"))),2)
+factor_two <- rep(rep(as.factor(c("Outside","Inside"))),2)
+factor_three <- rep(as.factor(c("Visual Group","Auditory Group")), each = 6)
+dv_means <- c(260,305,294,280,290,295,
+              255,265,285,255,300,260)
+dv_SEse   <- c(4,3.4,4,3,2,4,
+              1,2,1,2,3,2)
+plot_df_2 <- data.frame(factor_one,
+                      factor_two,
+                      factor_three,
+                      dv_means,
+                      dv_SEse)
+
+
+ggplot(plot_df_2, aes(x=factor_one,y=dv_means,
+                    group=factor_two,
+                    color=factor_two,
+                    fill=factor_two))+
+  facet_wrap(~factor_three) +
+  geom_bar(stat="identity", position="dodge")+
+  geom_errorbar(aes(ymin=dv_means-dv_SEse,
+                    ymax=dv_means+dv_SEse),
+                    position=position_dodge(width=.8),
+                    width=.5,
+                    color="black")+
+  coord_cartesian(ylim=c(230,350))+
+  xlab("Condition")+
+  ylab("Mean MEdian RT (ms)")+
+  ggtitle("Fig. 2")+
+  theme_classic(base_size=12)+
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+
+
+```{r}
+
+# Fİgure 3;
+
+condition_fig3 <- rep(as.factor(c("Fill","Empty")),2)
+wide_lev_fig3 <- rep(as.factor(c("Wide Base","Wide Top")),2)
+xids_fig3 <- c(19.5,17.5,18.5,18)
+dv_SEs_fig3   <- c(4,3.4,4,3)
+plot_df_3 <- data.frame(condition_fig3,
+                      wide_lev_fig3,
+                      xids_fig3,
+                      dv_SEs_fig3)
+
+ggplot(plot_df_3, aes(x=condition_fig3,y=xids_fig3,
+                    group=wide_lev_fig3,
+                    color=wide_lev_fig3,
+                    fill=wide_lev_fig3))+
+  geom_bar(stat="identity", position="dodge")+
+  geom_errorbar(aes(ymin=xids_fig3-dv_SEs_fig3,
+                    ymax=xids_fig3+dv_SEs_fig3),
+                position=position_dodge(width=.8),
+                width=.1,
+                color="black")+
+  coord_cartesian(ylim=c(17,20))+
+  xlab("")+
+  ylab("Estimate (xids)")+
+  ggtitle("Fig. 3")+
+  theme_classic(base_size=10)+
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
