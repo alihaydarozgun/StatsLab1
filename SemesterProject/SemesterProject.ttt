@@ -1,0 +1,22 @@
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:unnamed-chunk-1}}
+
+\begin{tabular}{lll}
+\toprule
+ToyPlaying & \multicolumn{1}{c}{count} & \multicolumn{1}{c}{mean}\\
+\midrule
+Familiar Song & 22 & 207.09\\
+Unfamiliar Song & 22 & 173.73\\
+\bottomrule
+\end{tabular}
+
+\end{threeparttable}
+\end{center}
+
+\end{table*}

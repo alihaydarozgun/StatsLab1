@@ -36,41 +36,7 @@ library(tidyr)
 all_data <- read.csv('LUL_pss.csv')
 
 
-experiment_four <-  all_data %>% filter(exp4 == 1)
-
-# Toy playing familiar song;
-
-familiar_song <- experiment_four$famtot_6
-
-mean(familiar_song)
-
-sd(familiar_song)
-
-median(familiar_song)
-
-
-# Toy playing unfamiliar song;
-
-un_familiar <- experiment_four$unfamtot_6
-
-mean(un_familiar)
-
-sd(un_familiar)
-
-# Paired sample t-test;
-
-t.test(familiar_song, un_familiar, paired = TRUE, var.equal = TRUE)
-
-
-# difference_scores <- experiment_four$mbabylike - experiment_four$mtotrecord
-
-difference_scores <- experiment_four$mtotrecord - experiment_four$mbabylike
-
-# difference_scores <- experiment_four$mtotsing - experiment_four$delay
-
-
-t.test(difference_scores, mu = .1)
-
+experiment_four <- all_data %>% filter(exp4 == 1)
 
 
 
@@ -78,37 +44,96 @@ t.test(difference_scores, mu = .1)
 
 
 ### Table of Means
-
 ```{r}
 
-data.frame(familiar_song, un_familiar)
+mean_table <- data.frame(
+  ToyPlaying = rep(c("Familiar Song", "Unfamiliar Song")),
+  LookingTime = c(experiment_four$famtot_6, experiment_four$unfamtot_6))
 
-
-  
-# Reproducing the participants female mean age and total number
-
-experiment_four %>% 
-  filter(female == 1) %>%
-  group_by(female) %>% 
-  summarize(meanAge = mean(experiment_four$age),
-            total_number = sum(experiment_four$female))
+group_by(mean_table, ToyPlaying) %>% 
+  summarise(
+    count = n(),
+    mean = mean(LookingTime),
+    sd = sd(LookingTime))
 
 ```
+
 
 ### Reproducing the Plot
 
 
 ```{r}
+library(ggplot2)
 
 
+mean_table <- data.frame(
+  ToyPlaying = rep(c("Familiar Song", "Unfamiliar Song")),
+  LookingTime = c(experiment_four$famtot_6, experiment_four$unfamtot_6))
+
+group_by(mean_table, ToyPlaying) %>% 
+  summarise(
+    count = n(),
+    mean = mean(LookingTime),
+    sd = sd(LookingTime))
+
+ggplot(mean_table, aes(x = ToyPlaying, y = LookingTime, color = ToyPlaying)) +
+  geom_boxplot()
 
 
 ```
 
+
+
+### Conducting t-test;
 
 ```{r}
 
+t.test(experiment_four$famtot_6, experiment_four$unfamtot_6, paired = TRUE)
+
+
 ```
+
+### Power analysis
+
+```{r}
+
+library(pwr)
+effect_sizes <- seq(.1,2,.1)
+power_analysis <- sapply(effect_sizes,
+          FUN = function(x) {
+            pwr.t.test(n=22,
+            d=x,
+            sig.level=.05,
+            type="paired",
+            alternative="two.sided")$power})
+plot_df <- data.frame(effect_sizes,power_analysis)
+
+library(ggplot2)
+ggplot(plot_df, aes(x=effect_sizes,
+                    y=power_analysis))+
+  geom_point()+
+  geom_line()
+
+```
+
+
+
+### Results
+
+Mean Looking times for difference in Toy Playing for Familiar Song and Unfamiliar Song were submitted to paired sample t-test.
+
+The re-analysis for the differences between Familiar and Unfamiliar songs showed, Md = 24.45, 95% CI [3.04, 45.87], t(21) = 2.38, p = .027.
+
+
+### Discussion
+
+The re-analysis successfully reproduced the analysis reported by Mehr et al. (2016). Results of the analysis showed in the `SemesterProject.Rmd` that uses `papaja` to write an APA paper.
+
+
+
+
+
+
 
 
 
